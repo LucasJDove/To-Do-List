@@ -224,8 +224,7 @@ document.querySelector("#openModalAdd").addEventListener("click", function() { /
 });
 
 
-
-// local storage
+// retrieving local storage
 let cardsListStorage = localStorage.getItem("cardsList")
 let cardIdsStorage = localStorage.getItem("cardIds")
 

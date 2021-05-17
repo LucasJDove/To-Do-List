@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 
-    
+
     <title>To do list</title>
   </head>
   <body>
@@ -65,14 +65,17 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <i class="fas fa-plus-circle col-1" id="openModalAdd" data-toggle="modal" data-target="#taskForm"></i>        
+    <div class="header bg-dark">
+        <div class="col text-center">
+            <h1>To Do List</h1>
+        </div>
+        <div class="row text-center justify-content-center">
+            <i class="fas fa-plus-circle col-lg-1 col-md-2 col-sm-2 col-xs-4" id="openModalAdd" data-toggle="modal" data-target="#taskForm"></i>        
             <div class="list-group col" id="contentListGroup">
                 
             </div>
         </div>
-    </nav>
+    </div>
     
     <div class="row" id="toDoOutput">
         <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="TODO">

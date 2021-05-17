@@ -2,10 +2,21 @@ body, h5 {
     font-size: 15px;
 } 
 
+.header {
+    padding: 25px;
+}
+
+.fas {
+    font-size: 25px;
+}  
+
+
 .fa-plus-circle {
+    font-size: 5vw;
     border-radius: 25px;
     color: cyan;
     padding: 20px;
+    margin: 1vw;
 }
 
 .fa-plus-circle:hover {
@@ -14,9 +25,6 @@ body, h5 {
     background-color: cyan;
 }
 
-.fas {
-    font-size: 25px;
-}  
 
 h5 {
     font-weight: bold;
