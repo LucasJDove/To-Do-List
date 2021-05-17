@@ -9,6 +9,10 @@ class TaskManager {
         this.cardIds = 0
     }
 
+    updatelocalstorage() {
+        localStorage.setItem("cardsList",JSON.stringify(this.cardsList))
+        localStorage.setItem("cardIds",JSON.stringify(this.cardIds))
+    }
     // empties the contents of the input boxes
     emptyInputBoxes() { 
         for (i=0; i < taskSections.length; i++) {
@@ -130,19 +134,21 @@ class TaskManager {
     // Add Task -> adds a task to existing Tasks List and creates a corresponsing card 
 	addTask(newTask) {
         this.getAllTasks().push(newTask) //adds current card to the list of cards in the form of an object
+        this.updatelocalstorage()
         this.fillCards()
     }
 
     // Delete Task -> deletes a task from the Tasks List and deletes it's corresponsing card
     deleteTask(task) {
         this.getAllTasks().splice(this.findTargetIdIndex(task.id), 1)
+        this.updatelocalstorage()
         this.fillCards()
     }
 
     // Update task status -> update the task status
     editTask(task) { 
 
-        // cloning and replacing the update button removes any and all pre-existing event listeners 
+        // cloning and replacing the update button removes any pre-existing event listeners 
         let oldUpdateButton = document.getElementById("updateTaskBtn");
         let newUpdateButton = oldUpdateButton.cloneNode(true);
         oldUpdateButton.parentNode.replaceChild(newUpdateButton, oldUpdateButton);
@@ -182,6 +188,7 @@ class TaskManager {
             } else {
                 document.getElementById("errorMessage").style = "" //makes the error message visible
             }
+            TaskManager1.updatelocalstorage()
             TaskManager1.fillCards()
         }); 
         
@@ -215,3 +222,15 @@ document.querySelector("#openModalAdd").addEventListener("click", function() { /
     document.getElementById("addTaskBtn").style = "";
     document.getElementById("errorMessage").style = "display: none;"
 });
+
+
+
+// local storage
+let cardsListStorage = localStorage.getItem("cardsList")
+let cardIdsStorage = localStorage.getItem("cardIds")
+
+if(cardsListStorage){
+    TaskManager1.cardsList = JSON.parse(cardsListStorage)
+    TaskManager1.cardsIds = JSON.parse(cardIdsStorage)
+    TaskManager1.fillCards()
+} 
