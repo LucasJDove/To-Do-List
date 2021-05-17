@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <title>To do list</title>
+  </head>
+  <body>
+    <!-- form with the inputs needed to create a task -->
+    <div class="modal fade" id="taskForm" tabindex="-1" role="dialog" aria-labelledby="newTaskLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newTaskLabel">Task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="mainForm modal-content" class=".">
+                        <div class="form-row close">
+                            <div id="errorMessage" style="display:none">
+                                <p>error, invalid input. input must not be empty, and be less than 20 characters.</p>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="inputName">Name</label>
+                                <input name="Name" type="text" class="form-control inputs" id="inputName" placeholder="Enter name" value="test">
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="inputDescription">Description</label>
+                                <input name="Description" type="text" class="form-control inputs" id="inputDescription" placeholder="Enter Description" value="test">
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="inputAssign">Assign to</label>
+                                <input name="Assign" type="text" class="form-control inputs" id="inputAssign" placeholder="Enter Assign" value="test">
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="inputDate">Due Date</label>
+                                <input name="Date" type="date" class="form-control inputs" id="inputDate" placeholder="Enter Due Date" value="2001-10-23">
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="inputStatus">Choose a Status:</label>
+                                <select name="status" id="inputStatus" class="inputs" value="TODO">
+                                    <option value="TODO">To Do</option>
+                                    <option value="INPROGRESS">In Progress</option>
+                                    <option value="REVIEW">Under Review</option>
+                                    <option value="DONE">Done</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-danger" id="addTaskBtn" >Add Task</button>
+                    <button type="button" class="btn-danger" id="updateTaskBtn" style="display: none;">Update Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <i class="fas fa-plus-circle col-1" id="openModalAdd" data-toggle="modal" data-target="#taskForm"></i>        
+            <div class="list-group col" id="contentListGroup">
+                
+            </div>
+        </div>
+    </nav>
+    
+    <div class="row" id="toDoOutput">
+        <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="TODO">
+            <h3>To Do</h3>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="INPROGRESS">
+            <h3>In Progress</h3>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="REVIEW">
+            <h3>Under Review</h3>
+        </div>
+        <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="DONE">
+            <h3>Done</h3>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://kit.fontawesome.com/cb279bfd62.js" crossorigin="anonymous"></script>
+    <script src="script.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

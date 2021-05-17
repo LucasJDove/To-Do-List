@@ -1,0 +1,82 @@
+body, h5 {
+    font-size: 15px;
+} 
+
+.fa-plus-circle {
+    border-radius: 25px;
+    color: cyan;
+    padding: 20px;
+}
+
+.fa-plus-circle:hover {
+    padding: 20px;
+    color: white;
+    background-color: cyan;
+}
+
+.fas {
+    font-size: 25px;
+}  
+
+h5 {
+    font-weight: bold;
+}
+
+
+body {
+    font-family: sans-serif;
+    color: white;
+}
+
+#newTaskLabel {
+    color: black;
+    font-size: 2vw;
+}
+
+.fa-trash:hover {
+    color: red;
+}
+
+.fa-pencil-alt:hover {
+    color: lime;
+}
+
+.row {
+    justify-content: center;
+}
+
+#errorMessage {
+    color: red;
+    font-size: 2vw;
+}
+
+#TODO {
+    background: #12c2e9;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(45deg, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(45deg, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#INPROGRESS {
+    background: #00B4DB;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(45deg, #0083B0, #00B4DB);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(45deg, #0083B0, #00B4DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+#REVIEW {
+    background: #ED213A;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(45deg, #93291E, #ED213A);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(45deg, #93291E, #ED213A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#DONE {
+    background: #C33764;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(45deg, #1D2671, #C33764);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(45deg, #1D2671, #C33764); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#TODO, #INPROGRESS, #REVIEW, #DONE {
+    margin: 20px;
+    padding: 30px;
+    border-radius: 25px;
+}
+
