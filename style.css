@@ -1,5 +1,6 @@
 body, h5 {
     font-size: 15px;
+
 } 
 
 .header {
@@ -9,7 +10,6 @@ body, h5 {
 .fas {
     font-size: 25px;
 }  
-
 
 .fa-plus-circle {
     font-size: 5vw;
@@ -25,15 +25,15 @@ body, h5 {
     background-color: cyan;
 }
 
-
 h5 {
     font-weight: bold;
 }
 
-
 body {
     font-family: sans-serif;
     color: white;
+    filter: drop-shadow(1px 1px 1px #000000);
+
 }
 
 #newTaskLabel {
@@ -87,4 +87,3 @@ body {
     padding: 30px;
     border-radius: 25px;
 }
-

@@ -159,7 +159,7 @@ class TaskManager {
         document.getElementById("addTaskBtn").style = "display: none;";
         $('#taskForm').modal('show');
         
-        //
+        //find the card, and set the form inputs to have it's values
         let card = this.getAllTasks()[this.findTargetIdIndex(task.id)]
         taskSections[0].value = card["name"]
         taskSections[1].value = card["description"]
@@ -206,7 +206,7 @@ document.querySelector("#addTaskBtn").addEventListener("click", function() { //a
     validInput = TaskManager1.validateTaskForm(validInput)
 
     if (validInput) {
-        TaskManager1.addTask(newTask) //adds current card to the list of cards in the form of an object, returns that object to here
+        TaskManager1.addTask(newTask) 
         TaskManager1.cardIds++
         $('#taskForm').modal('hide');
         TaskManager1.emptyInputBoxes()
