@@ -11,7 +11,6 @@ class TaskObject {
         this.assignedTo = taskSections[2].value,
         this.dueDate = taskSections[3].value,
         this.status = taskSections[4].value
-    
     }
 }
 
@@ -229,8 +228,6 @@ document.querySelector("#openModalAdd").addEventListener("click", function() { /
 
 
 // retrieving local storage
-localStorage.removeItem("cardsList")
-localStorage.removeItem("cardIds")
 let cardsListStorage = localStorage.getItem("cardsList")
 let cardIdsStorage = localStorage.getItem("cardIds")
 
