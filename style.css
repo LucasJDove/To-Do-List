@@ -32,8 +32,6 @@ h5 {
 body {
     font-family: sans-serif;
     color: white;
-    filter: drop-shadow(1px 1px 1px #000000);
-
 }
 
 #newTaskLabel {
