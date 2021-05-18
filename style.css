@@ -15,12 +15,12 @@ body, h5 {
     font-size: 5vw;
     border-radius: 25px;
     color: cyan;
+    background: white;
     padding: 20px;
     margin: 1vw;
 }
 
 .fa-plus-circle:hover {
-    padding: 20px;
     color: white;
     background-color: cyan;
 }

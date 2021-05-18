@@ -49,7 +49,6 @@ let TaskManager = {
 
     // creates an object out of the users input, and a preset id
 
-    
     findTargetIdIndex(taskId) { // finds the index of the id given in the parameter
         for(var i = 0; i < TaskManager.getAllTasks().length; i += 1) { //checks through the entire list
             if(TaskManager.getAllTasks()[i].id === Number(taskId)) { //if the id is equal to target id
@@ -65,8 +64,8 @@ let TaskManager = {
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-space-between">
                                     <h5 class="mb-1 col-6">Task </h5>
-                                    <i class="col-3 fas fa-pencil-alt editButton data-toggle="modal" data-target="#newTask"></i>
-                                    <i class="col-3 fas fa-trash deleteButton" ></i>
+                                    <i class="col-3 fas fa-pencil-alt editButton data-toggle="modal" data-target="#newTask" title="Edit task" alt="Edit task"></i>
+                                    <i class="col-3 fas fa-trash deleteButton" title="Delete task" alt="Delete Task"></i>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
