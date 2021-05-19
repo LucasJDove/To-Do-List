@@ -155,7 +155,7 @@ let TaskManager = {
         } else {
             for (i in errors) {
                 alert(errors[i])
-            } //makes the error message visible
+            } 
         }
     },
 
@@ -192,10 +192,10 @@ let TaskManager = {
         //
         document.querySelector("#updateTaskBtn").addEventListener("click", function() {
             //
-            let validInput = TaskManager.validateTaskForm()
+            let errors = TaskManager.validateTaskForm()
         
             //
-            if (validInput) {
+            if (errors.length == 0) {
                 card["name"] = taskSections[0].value
                 card["description"] = taskSections[1].value
                 card["assignedTo"] = taskSections[2].value
@@ -206,7 +206,9 @@ let TaskManager = {
                 TaskManager.updatelocalstorage()
                 TaskManager.fillCards()    
             } else {
-                document.getElementById("errorMessage").style = "" //makes the error message visible
+                for (i in errors) {
+                    alert(errors[i])
+                }
             }
         }); 
     } 
