@@ -26,7 +26,7 @@ let TaskManager = {
     
     // empties the contents of the input boxes
     emptyInputBoxes() { 
-        for (i=0; i < taskSections.length; i++) {
+        for (i in taskSections) {
             taskSections[i].value = ""; 
         }
     },
@@ -41,7 +41,6 @@ let TaskManager = {
         "'Assigned to' invalid, please enter an assignment that is not empty, and is fewer than 20 characters", 
         "Due Date invalid, please enter a Due Date", 
         "status invalid, please enter a status"]
-        console.log(formInputs, description)
 
         for (i in formInputs) {
             if (Number(formInputs[i]) == 0 || formInputs[i].length > 20) {
@@ -56,6 +55,25 @@ let TaskManager = {
     },
     
 
+    refreshUpdateButton() {
+        let oldUpdateButton = document.getElementById("updateTaskBtn");
+        let newUpdateButton = oldUpdateButton.cloneNode(true);
+        oldUpdateButton.parentNode.replaceChild(newUpdateButton, oldUpdateButton);
+    },
+
+    prepareUpdateForm(card) {
+        document.getElementById("updateTaskBtn").style = "";
+        document.getElementById("addTaskBtn").style = "display: none;";
+        $('#taskForm').modal('show');
+
+        taskSections[0].value = card["name"]
+        taskSections[1].value = card["description"]
+        taskSections[2].value = card["assignedTo"]
+        taskSections[3].value = card["dueDate"]
+        taskSections[4].value = card["status"]
+
+    },
+
     findTargetIdIndex(targetId) { // finds the index of the id given in the parameter
         for(i in TaskManager.cardsList) { //checks through the entire list
             if(TaskManager.cardsList[i].id == targetId) { //if the id is equal to target id
@@ -64,7 +82,7 @@ let TaskManager = {
         }
     },
 
-    fillCard(cardContent) { //fills out a single card and content list, parameter must be an object containing card content
+    displayCard(cardContent) { //fills out a single card and content list, parameter must be an object containing card content
         let card = document.createElement("div"); //defines a new card
         card.innerHTML = `<div class="list-group cards" draggable="true" id="${cardContent.id}">
                             <div class="list-group-item list-group-item-action">
@@ -77,19 +95,19 @@ let TaskManager = {
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
                                     <h5 class="mb-1 col">name: </h5> 
-                                    <p class="name"> ${cardContent.name} </p>
+                                    <p class="name">  </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
                                     <h5 class="mb-1 col">description: </h5>
-                                <p class="description"> ${cardContent.description} </p>
+                                <p class="description">  </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
                                     <h5 class="mb-1 col">assigned to: </h5>
-                                    <p class="assignedTo"> ${cardContent.assignedTo} </p>
+                                    <p class="assignedTo">  </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
@@ -99,26 +117,33 @@ let TaskManager = {
                                 </div>
                             </div>
                         </div>`
+        document.getElementById(cardContent.status).appendChild(card); //adds new card to the status output section
+        // adds users input to the card, guaranteeing that it's interpreted as text, and not html. otherwise, if the user were to input html tags, that would effect the styling of the page.
+        document.getElementById(cardContent.id).querySelector(".name").innerText = cardContent.name 
+        document.getElementById(cardContent.id).querySelector(".description").innerText = cardContent.description
+        document.getElementById(cardContent.id).querySelector(".assignedTo").innerText = cardContent.assignedTo
 
-        
+
         let contentListElem = document.createElement("div"); //defines a new element in the content list
         contentListElem.innerHTML = `<div class="list-group-item list-group-item-action" id="${cardContent.id}contentList">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Task for: ${cardContent.name}</h5>
-                                        <small>Due: ${cardContent.dueDate}</small>
+                                        <h5 class="mb-1 name">Task for: </h5>
+                                        <small class="dueDate">Due: </small>
                                     </div>
-                                    <small>Status: ${cardContent.status}</small>
+                                    <small class="status">Status: ${cardContent.status}</small>
                                 </div>`
-        
-        document.getElementById(cardContent.status).appendChild(card); //adds new card to the status output section for every card in the list
         document.getElementById("contentListGroup").appendChild(contentListElem); 
+        document.getElementById(cardContent.id+"contentList").querySelector(".name").innerText ="Task for: "+ cardContent.name 
+        document.getElementById(cardContent.id+"contentList").querySelector(".dueDate").innerText ="Due: "+ cardContent.dueDate 
+
+
         document.getElementById(cardContent.id).querySelector(".deleteButton").addEventListener("click", () => TaskManager.deleteTask(cardContent)); 
         document.getElementById(cardContent.id).querySelector(".editButton").addEventListener("click", () => TaskManager.editTask(cardContent)); 
         document.getElementById(cardContent.id).addEventListener("dragstart", () => TaskManager.updateTask(cardContent, "status"));
     
     },
 
-    fillCards() { //resets the output html sections back to default and fills all cards.
+    displayCards() { //resets the output html sections back to default and fills all cards.
         document.getElementById("toDoOutput").innerHTML = ` <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="TODO">
                                                                 <h3>To Do</h3>
                                                             </div>
@@ -133,8 +158,8 @@ let TaskManager = {
                                                             </div>`
         document.getElementById("contentListGroup").innerHTML = ""
 
-        for (i=0; i < TaskManager.cardsList.length; i++) {
-            TaskManager.fillCard(TaskManager.cardsList[i])    
+        for (card of TaskManager.cardsList) {
+            TaskManager.displayCard(card)    
         };
     },
 
@@ -150,7 +175,7 @@ let TaskManager = {
             TaskManager.emptyInputBoxes()
             TaskManager.cardsList.push(newTask) //adds current card to the list of cards in the form of an object
             TaskManager.updatelocalstorage()
-            TaskManager.fillCards()
+            TaskManager.displayCards()
     
         } else {
             for (i in errors) {
@@ -163,32 +188,17 @@ let TaskManager = {
     deleteTask(task) {
         TaskManager.cardsList.splice(TaskManager.findTargetIdIndex(task.id), 1)
         TaskManager.updatelocalstorage()
-        TaskManager.fillCards()
+        TaskManager.displayCards()
     },
 
     // Update task status -> update the task status
     editTask(task) { 
 
         // cloning and replacing the update button removes any pre-existing event listeners 
-        let oldUpdateButton = document.getElementById("updateTaskBtn");
-        let newUpdateButton = oldUpdateButton.cloneNode(true);
-        oldUpdateButton.parentNode.replaceChild(newUpdateButton, oldUpdateButton);
-
+        this.refreshUpdateButton()
         // displays the correct buttons and messages, as well as the entire form.
-        document.getElementById("errorMessage").style = "display: none;"
-        document.getElementById("updateTaskBtn").style = "";
-        document.getElementById("addTaskBtn").style = "display: none;";
-        $('#taskForm').modal('show');
-        
-        //
         let card = TaskManager.cardsList[TaskManager.findTargetIdIndex(task.id)]
-        console.log(card, TaskManager.cardsList, TaskManager.findTargetIdIndex(task.id))
-        taskSections[0].value = card["name"]
-        taskSections[1].value = card["description"]
-        taskSections[2].value = card["assignedTo"]
-        taskSections[3].value = card["dueDate"]
-        taskSections[4].value = card["status"]
-        
+        this.prepareUpdateForm(card)
         //
         document.querySelector("#updateTaskBtn").addEventListener("click", function() {
             //
@@ -204,7 +214,7 @@ let TaskManager = {
                 $('#taskForm').modal('hide');
                 TaskManager.emptyInputBoxes()
                 TaskManager.updatelocalstorage()
-                TaskManager.fillCards()    
+                TaskManager.displayCards()    
             } else {
                 for (i in errors) {
                     alert(errors[i])
@@ -221,7 +231,6 @@ document.querySelector("#openModalAdd").addEventListener("click", function() { /
     TaskManager.emptyInputBoxes()
     document.getElementById("updateTaskBtn").style = "display: none;";
     document.getElementById("addTaskBtn").style = "";
-    document.getElementById("errorMessage").style = "display: none;"
 });
 
 
@@ -229,9 +238,10 @@ document.querySelector("#openModalAdd").addEventListener("click", function() { /
 let cardsListStorage = localStorage.getItem("cardsList")
 let cardIdsStorage = localStorage.getItem("cardIds")
 console.log(JSON.parse(cardsListStorage), JSON.parse(cardIdsStorage))
+console.log(cardsListStorage.length)
 
 if(cardsListStorage){
     TaskManager.cardsList = JSON.parse(cardsListStorage)
     TaskManager.cardIds = JSON.parse(cardIdsStorage)
-    TaskManager.fillCards()
-} 
+    TaskManager.displayCards()
+}
