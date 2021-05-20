@@ -3,10 +3,6 @@ body, h5 {
 
 } 
 
-.cards {
-    color:black
-}
-
 .header {
     padding: 25px;
 }
@@ -55,8 +51,9 @@ body {
     justify-content: center;
 }
 
-#newTaskLabel {
-    font-size: 30px;
+#errorMessage {
+    color: red;
+    font-size: 2vw;
 }
 
 #TODO {
