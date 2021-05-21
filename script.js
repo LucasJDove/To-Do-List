@@ -80,9 +80,9 @@ let TaskManager = {
         }
     },
 
-    fillCard(task) { //fills out a single card and content list, parameter must be an object containing card content
+    displayCard(task) { //fills out a single card and content list, parameter must be an object containing card content
         let card = document.createElement("div"); //defines a new card
-        card.innerHTML = `<div class="list-group cards" draggable="true" id="${task.id}">
+        card.innerHTML = `<div class="list-group cards" id="${task.id}">
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-space-between">
                                     <h5 class="mb-1 col-6">Task </h5>
@@ -92,26 +92,26 @@ let TaskManager = {
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
-                                    <h5 class="mb-1 col">name: </h5> 
-                                    <p class="name"> ${task.name} </p>
+                                    <h5 class="mb-1 col">Name: </h5> 
+                                    <p class="name col"> ${task.name} </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
-                                    <h5 class="mb-1 col">description: </h5>
-                                <p class="description"> ${task.description} </p>
+                                    <h5 class="mb-1 col">Description: </h5>
+                                    <p class="description col"> ${task.description} </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
-                                    <h5 class="mb-1 col">assigned to: </h5>
-                                    <p class="assignedTo"> ${task.assignedTo} </p>
+                                    <h5 class="mb-1 col">Assigned to: </h5>
+                                    <p class="assignedTo col"> ${task.assignedTo} </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
-                                    <h5 class="mb-1 col">due date: </h5>
-                                <p class="dueDate"> ${task.dueDate} </p>
+                                    <h5 class="mb-1 col">Due date: </h5>
+                                <p class="dueDate col"> ${task.dueDate} </p>
                                 </div>
                             </div>
                         </div>`
@@ -134,7 +134,7 @@ let TaskManager = {
     
     },
 
-    fillCards() { //resets the output html sections back to default and fills all cards.
+    displayCards() { //resets the output html sections back to default and fills all cards.
         document.getElementById("toDoOutput").innerHTML = ` <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="TODO">
                                                                 <h3>To Do</h3>
                                                             </div>
@@ -150,7 +150,7 @@ let TaskManager = {
         document.getElementById("contentListGroup").innerHTML = ""
 
         for (i in TaskManager.cardsList) {
-            TaskManager.fillCard(TaskManager.cardsList[i])    
+            TaskManager.displayCard(TaskManager.cardsList[i])    
         };
     },
 
@@ -166,7 +166,7 @@ let TaskManager = {
             TaskManager.emptyInputBoxes()
             TaskManager.cardsList.push(newTask) //adds current card to the list of cards in the form of an object
             TaskManager.updatelocalstorage()
-            TaskManager.fillCards()
+            TaskManager.displayCards()
     
         } else {
             for (i in errors) {
@@ -179,7 +179,7 @@ let TaskManager = {
     deleteTask(task) {
         TaskManager.cardsList.splice(TaskManager.findTargetIdIndex(task.id), 1)
         TaskManager.updatelocalstorage()
-        TaskManager.fillCards()
+        TaskManager.displayCards()
     },
 
     // Update task -> update a task object and updates it's corresponsing card
@@ -188,11 +188,9 @@ let TaskManager = {
         TaskManager.refreshUpdateButton()
         TaskManager.displayUpdateForm()
         
-        //
         let card = TaskManager.cardsList[TaskManager.findTargetIdIndex(task.id)]
         TaskManager.fillUpdateForm(card)
         
-        //
         document.querySelector("#updateTaskBtn").addEventListener("click", function() {
             //
             let errors = TaskManager.validateTaskForm()
@@ -207,7 +205,7 @@ let TaskManager = {
                 $('#taskForm').modal('hide');
                 TaskManager.emptyInputBoxes()
                 TaskManager.updatelocalstorage()
-                TaskManager.fillCards()    
+                TaskManager.displayCards()    
             } else {
                 for (i in errors) {
                     alert(errors[i])
@@ -224,9 +222,7 @@ document.querySelector("#openModalAdd").addEventListener("click", function() { /
     TaskManager.emptyInputBoxes()
     document.getElementById("updateTaskBtn").style = "display: none;";
     document.getElementById("addTaskBtn").style = "";
-    document.getElementById("errorMessage").style = "display: none;"
 });
-
 
 // retrieving local storage
 let cardsListStorage = localStorage.getItem("cardsList")
@@ -235,5 +231,5 @@ let cardIdsStorage = localStorage.getItem("cardIds")
 if(cardsListStorage){
     TaskManager.cardsList = JSON.parse(cardsListStorage)
     TaskManager.cardIds = JSON.parse(cardIdsStorage)
-    TaskManager.fillCards()
+    TaskManager.displayCards()
 } 
