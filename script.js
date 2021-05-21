@@ -1,25 +1,34 @@
 //creates a list containing all the user inputs, this refers to the tags themselves, not the values within.
-let taskSections = document.getElementsByClassName("inputs");
+let taskSections = [nameInput, descriptionInput, assignedToInput, dueDateInput, statusInput] = document.getElementsByClassName("inputs");
+console.log(nameInput)
+
+let colourKey = {
+    toDo: "danger",
+    inProgress: "warning",
+    review: "success",
+    completed: "info",
+}
+
 
 //create a new task object using the user's input
-class TaskObject { 
+class Task { 
     constructor(taskSections) {
-        this.id = TaskManager.cardIds,
-        this.name = taskSections[0].value,
-        this.description = taskSections[1].value,
-        this.assignedTo = taskSections[2].value,
-        this.dueDate = taskSections[3].value,
-        this.status = taskSections[4].value
+        this.id = TaskManager.taskIds,
+        this.name = nameInput.value,
+        this.description = descriptionInput.value,
+        this.assignedTo = assignedToInput.value,
+        this.dueDate = dueDateInput.value,
+        this.status = statusInput.value
     }
 }
 
 let TaskManager = {
-    cardsList: [],
-    cardIds: 0,
+    tasksList: [],
+    taskIds: 0,
 
     updatelocalstorage() {
-        localStorage.setItem("cardsList",JSON.stringify(TaskManager.cardsList))
-        localStorage.setItem("cardIds",JSON.stringify(TaskManager.cardIds))
+        localStorage.setItem("tasksList",JSON.stringify(TaskManager.tasksList))
+        localStorage.setItem("taskIds",JSON.stringify(TaskManager.taskIds))
     },
     
     // empties the contents of the input boxes
@@ -33,8 +42,8 @@ let TaskManager = {
     //by passing the input through the Number() function, if it's an empty string, or an empty string with a space inside, it'll return zero and be considered invalid.
     validateTaskForm() { 
         errors = []
-        let description = taskSections[1].value
-        formInputs = [taskSections[0].value, taskSections[2].value, taskSections[3].value, taskSections[4].value]
+        let description = descriptionInput.value
+        formInputs = [nameInput.value, assignedToInput.value, dueDateInput.value, statusInput.value]
         errorMessages = ["name invalid, please enter a name that is not empty, and is fewer than than 20 characters", 
         "'Assigned to' invalid, please enter an assignment that is not empty, and is fewer than 20 characters", 
         "Due Date invalid, please enter a Due Date", 
@@ -64,27 +73,27 @@ let TaskManager = {
         $('#taskForm').modal('show');
     },
 
-    fillUpdateForm(card) {
-        taskSections[0].value = card["name"]
-        taskSections[1].value = card["description"]
-        taskSections[2].value = card["assignedTo"]
-        taskSections[3].value = card["dueDate"]
-        taskSections[4].value = card["status"]
+    fillUpdateForm(task) {
+        nameInput.value = task["name"]
+        descriptionInput.value = task["description"]
+        assignedToInput.value = task["assignedTo"]
+        dueDateInput.value = task["dueDate"]
+        statusInput.value = task["status"]
     },
 
     findTargetIdIndex(targetId) { // finds the index of the id given in the parameter
-        for (i in TaskManager.cardsList) { //checks through the entire list
-            if(TaskManager.cardsList[i].id == targetId) { //if the id is equal to target id
+        for (i in TaskManager.tasksList) { //checks through the entire list
+            if(TaskManager.tasksList[i].id == targetId) { //if the id is equal to target id
                 return i
             }
         }
     },
 
-    displayCard(task) { //fills out a single card and content list, parameter must be an object containing card content
+    displayCard(task) { //fills out a single task and content list, parameter must be an object containing task content
         let card = document.createElement("div"); //defines a new card
-        card.innerHTML = `<div class="list-group cards" id="${task.id}">
+        card.innerHTML = `<div class="list-group cards bg-${colourKey[task.status]}" id="${task.id}">
                             <div class="list-group-item list-group-item-action">
-                                <div class="d-flex w-100 justify-space-between">
+                                <div class="d-flex w-100 justify-space-between ">
                                     <h5 class="mb-1 col-6">Task </h5>
                                     <i class="col-3 fas fa-pencil-alt editButton data-toggle="modal" data-target="#newTask" title="Edit task" alt="Edit task"></i>
                                     <i class="col-3 fas fa-trash deleteButton" title="Delete task" alt="Delete Task"></i>
@@ -99,7 +108,7 @@ let TaskManager = {
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
                                     <h5 class="mb-1 col">Description: </h5>
-                                    <p class="description col"> ${task.description} </p>
+                                    <p class="description col" style="word-wrap: break-word;"> ${task.description} </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
@@ -135,36 +144,36 @@ let TaskManager = {
     },
 
     displayCards() { //resets the output html sections back to default and fills all cards.
-        document.getElementById("toDoOutput").innerHTML = ` <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="TODO">
+        document.getElementById("toDoOutput").innerHTML = ` <div class="col-xl-2 col-lg-3 col-sm-5 col-8 taskSections" id="TODO">
                                                                 <h3>To Do</h3>
                                                             </div>
-                                                            <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="INPROGRESS">
+                                                            <div class="col-xl-2 col-lg-3 col-sm-5 col-8 taskSections" id="INPROGRESS">
                                                                 <h3>In Progress</h3>
                                                             </div>
-                                                            <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="REVIEW">
+                                                            <div class="col-xl-2 col-lg-3 col-sm-5 col-8 taskSections" id="REVIEW">
                                                                 <h3>Under Review</h3>
                                                             </div>
-                                                            <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="DONE">
+                                                            <div class="col-xl-2 col-lg-3 col-sm-5 col-8 taskSections" id="DONE">
                                                                 <h3>Done</h3>
                                                             </div>`
         document.getElementById("contentListGroup").innerHTML = ""
 
-        for (i in TaskManager.cardsList) {
-            TaskManager.displayCard(TaskManager.cardsList[i])    
+        for (i in TaskManager.tasksList) {
+            TaskManager.displayCard(TaskManager.tasksList[i])    
         };
     },
 
     // Add Task -> adds a task to existing Tasks List and creates a corresponsing card 
 	addTask() {
-        let newTask = new TaskObject(taskSections)
+        let newTask = new Task(taskSections)
 
         let errors = TaskManager.validateTaskForm()
     
         if (errors.length == 0) {
-            TaskManager.cardIds++
+            TaskManager.taskIds++
             $('#taskForm').modal('hide');
             TaskManager.emptyInputBoxes()
-            TaskManager.cardsList.push(newTask) //adds current card to the list of cards in the form of an object
+            TaskManager.tasksList.push(newTask) //adds current card to the list of cards in the form of an object
             TaskManager.updatelocalstorage()
             TaskManager.displayCards()
     
@@ -177,9 +186,31 @@ let TaskManager = {
 
     // Delete Task -> deletes a task from the Tasks List and deletes it's corresponsing card
     deleteTask(task) {
-        TaskManager.cardsList.splice(TaskManager.findTargetIdIndex(task.id), 1)
+        TaskManager.tasksList.splice(TaskManager.findTargetIdIndex(task.id), 1)
         TaskManager.updatelocalstorage()
         TaskManager.displayCards()
+    },
+
+    updateTask(task) {
+        let errors = TaskManager.validateTaskForm()
+        
+        //
+        if (errors.length == 0) {
+            task["name"] = nameInput.value
+            task["description"] = descriptionInput.value
+            task["assignedTo"] = assignedToInput.value
+            task["dueDate"] = dueDateInput.value
+            task["status"] = statusInput.value
+            $('#taskForm').modal('hide');
+            TaskManager.emptyInputBoxes()
+            TaskManager.updatelocalstorage()
+            TaskManager.displayCards()    
+        } else {
+            for (i in errors) {
+                alert(errors[i])
+            }
+        }
+
     },
 
     // Update task -> update a task object and updates it's corresponsing card
@@ -188,30 +219,11 @@ let TaskManager = {
         TaskManager.refreshUpdateButton()
         TaskManager.displayUpdateForm()
         
-        let card = TaskManager.cardsList[TaskManager.findTargetIdIndex(task.id)]
-        TaskManager.fillUpdateForm(card)
+        task = TaskManager.tasksList[TaskManager.findTargetIdIndex(task.id)]
+
+        TaskManager.fillUpdateForm(task)
         
-        document.querySelector("#updateTaskBtn").addEventListener("click", function() {
-            //
-            let errors = TaskManager.validateTaskForm()
-        
-            //
-            if (errors.length == 0) {
-                card["name"] = taskSections[0].value
-                card["description"] = taskSections[1].value
-                card["assignedTo"] = taskSections[2].value
-                card["dueDate"] = taskSections[3].value
-                card["status"] = taskSections[4].value
-                $('#taskForm').modal('hide');
-                TaskManager.emptyInputBoxes()
-                TaskManager.updatelocalstorage()
-                TaskManager.displayCards()    
-            } else {
-                for (i in errors) {
-                    alert(errors[i])
-                }
-            }
-        }); 
+        document.querySelector("#updateTaskBtn").addEventListener("click", () => TaskManager.updateTask(task))
     } 
 }
 
@@ -225,11 +237,14 @@ document.querySelector("#openModalAdd").addEventListener("click", function() { /
 });
 
 // retrieving local storage
-let cardsListStorage = localStorage.getItem("cardsList")
-let cardIdsStorage = localStorage.getItem("cardIds")
+let tasksListStorage = localStorage.getItem("tasksList")
+let taskIdsStorage = localStorage.getItem("taskIds")
 
-if(cardsListStorage){
-    TaskManager.cardsList = JSON.parse(cardsListStorage)
-    TaskManager.cardIds = JSON.parse(cardIdsStorage)
+if(tasksListStorage){
+    TaskManager.tasksList = JSON.parse(tasksListStorage)
+    TaskManager.taskIds = JSON.parse(taskIdsStorage)
     TaskManager.displayCards()
 } 
+
+
+

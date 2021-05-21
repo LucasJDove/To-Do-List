@@ -1,7 +1,9 @@
+/* word-wrap: break-word; */
+
+
 body, h5 {
     font-size: 15px;
     overflow-x: hidden;
-
 } 
 
 .col {
