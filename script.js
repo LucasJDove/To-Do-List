@@ -97,25 +97,25 @@ let TaskManager = {
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
-                                    <h5 class="mb-1 col">Name: </h5> 
+                                    <h5 class="mb-1">Name: </h5> 
                                     <p class="name col"> ${task.name} </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
-                                    <h5 class="mb-1 col">Description: </h5>
+                                    <h5 class="mb-1">Description: </h5>
                                     <p class="description col" style="word-wrap: break-word;"> ${task.description} </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
-                                    <h5 class="mb-1 col">Assigned to: </h5>
+                                    <h5 class="mb-1">Assigned to: </h5>
                                     <p class="assignedTo col"> ${task.assignedTo} </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
-                                    <h5 class="mb-1 col">Due date: </h5>
+                                    <h5 class="mb-1">Due date: </h5>
                                 <p class="dueDate col"> ${task.dueDate} </p>
                                 </div>
                             </div>
