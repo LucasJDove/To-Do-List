@@ -1,14 +1,5 @@
 //creates a list containing all the user inputs, this refers to the tags themselves, not the values within.
 let taskSections = [nameInput, descriptionInput, assignedToInput, dueDateInput, statusInput] = document.getElementsByClassName("inputs");
-console.log(nameInput)
-
-let colourKey = {
-    toDo: "danger",
-    inProgress: "warning",
-    review: "success",
-    completed: "info",
-}
-
 
 //create a new task object using the user's input
 class Task { 
@@ -26,53 +17,56 @@ let TaskManager = {
     tasksList: [],
     taskIds: 0,
 
+
     updatelocalstorage() {
         localStorage.setItem("tasksList",JSON.stringify(TaskManager.tasksList))
         localStorage.setItem("taskIds",JSON.stringify(TaskManager.taskIds))
     },
     
-    // empties the contents of the input boxes
     emptyInputBoxes() { 
         for (i in taskSections) {
             taskSections[i].value = ""; 
         }
     },
 
-    //verifies that the inputs inserted by the user in the task form are correct: Not Empty and shorter than 20 characters
-    //by passing the input through the Number() function, if it's an empty string, or an empty string with a space inside, it'll return zero and be considered invalid.
+    /* returns a list containing all the error messages that need to be displayed
+    by passing the input through the Number() function:
+    if it's an empty string, or an empty string with space(s) inside it'll return zero and be considered invalid. */
     validateTaskForm() { 
         errors = []
         let description = descriptionInput.value
         formInputs = [nameInput.value, assignedToInput.value, dueDateInput.value, statusInput.value]
-        errorMessages = ["name invalid, please enter a name that is not empty, and is fewer than than 20 characters", 
+        errorMessages = ["Name invalid, please enter a name that is not empty, and is fewer than than 20 characters", 
         "'Assigned to' invalid, please enter an assignment that is not empty, and is fewer than 20 characters", 
-        "Due Date invalid, please enter a Due Date", 
-        "status invalid, please enter a status"]
+        "Due Date invalid, please enter a due date", 
+        "Status invalid, please enter a status"]
 
         for (i in formInputs) {
             if (Number(formInputs[i]) == 0 || formInputs[i].length > 20) {
                 errors.push(errorMessages[i]);
             }
         };
-        if (description.length < 20) {
-            errors.splice(1, 0, "description invalid, please enter a description that is greater than 20 characters")
+        if (Number(description) == 0 || description.length < 20) {
+            errors.splice(1, 0, "Description invalid, please enter a description that is greater than 20 characters")
         }
 
         return errors
     },
-    
-    refreshUpdateButton() { // cloning and replacing the update button removes any pre-existing event listeners 
+    // cloning and replacing the update button to remove any pre-existing event listeners
+    refreshUpdateButton() {  
         let oldUpdateButton = document.getElementById("updateTaskBtn");
         let newUpdateButton = oldUpdateButton.cloneNode(true);
         oldUpdateButton.parentNode.replaceChild(newUpdateButton, oldUpdateButton);
     },
 
+    //displays the form in a manner ready to update the task. 
     displayUpdateForm() {
         document.getElementById("updateTaskBtn").style = "";
         document.getElementById("addTaskBtn").style = "display: none;";
         $('#taskForm').modal('show');
     },
 
+    //updates the input form to contain the contents of the task being edited
     fillUpdateForm(task) {
         nameInput.value = task["name"]
         descriptionInput.value = task["description"]
@@ -81,7 +75,8 @@ let TaskManager = {
         statusInput.value = task["status"]
     },
 
-    findTargetIdIndex(targetId) { // finds the index of the id given in the parameter
+    // finds the index of the id given in the parameter
+    findTargetIdIndex(targetId) { 
         for (i in TaskManager.tasksList) { //checks through the entire list
             if(TaskManager.tasksList[i].id == targetId) { //if the id is equal to target id
                 return i
@@ -89,7 +84,8 @@ let TaskManager = {
         }
     },
 
-    displayCard(task) { //fills out a single task and content list, parameter must be an object containing task content
+    //fills out a single task and content list, parameter must be an object containing task content
+    displayCard(task) { 
         let card = document.createElement("div"); //defines a new card
         card.innerHTML = `<div class="list-group cards bg-${colourKey[task.status]}" id="${task.id}">
                             <div class="list-group-item list-group-item-action">
@@ -143,7 +139,8 @@ let TaskManager = {
     
     },
 
-    displayCards() { //resets the output html sections back to default and fills all cards.
+    //resets the output html sections back to default and fills all cards.
+    displayCards() { 
         document.getElementById("toDoOutput").innerHTML = ` <div class="col-xl-2 col-lg-3 col-sm-5 col-8 taskSections" id="TODO">
                                                                 <h3>To Do</h3>
                                                             </div>
@@ -163,7 +160,7 @@ let TaskManager = {
         };
     },
 
-    // Add Task -> adds a task to existing Tasks List and creates a corresponsing card 
+    // adds a task to existing Tasks List and creates a corresponsing card 
 	addTask() {
         let newTask = new Task(taskSections)
 
@@ -184,13 +181,14 @@ let TaskManager = {
         }
     },
 
-    // Delete Task -> deletes a task from the Tasks List and deletes it's corresponsing card
+    // deletes a task from the Tasks List and deletes it's corresponsing card
     deleteTask(task) {
         TaskManager.tasksList.splice(TaskManager.findTargetIdIndex(task.id), 1)
         TaskManager.updatelocalstorage()
         TaskManager.displayCards()
     },
 
+    //puts the changes made to a task by the user into effect
     updateTask(task) {
         let errors = TaskManager.validateTaskForm()
         
@@ -213,7 +211,7 @@ let TaskManager = {
 
     },
 
-    // Update task -> update a task object and updates it's corresponsing card
+    // opens and prepares the form for the user to edit a task. 
     editTask(task) { 
 
         TaskManager.refreshUpdateButton()
@@ -230,7 +228,8 @@ let TaskManager = {
 //adds a task when the "addtask" button is pressed
 document.querySelector("#addTaskBtn").addEventListener("click", TaskManager.addTask); 
 
-document.querySelector("#openModalAdd").addEventListener("click", function() { //makes sure the correct things are visible when the modal is opened to add a task
+//makes sure the correct things are visible when the modal is opened to add a task
+document.querySelector("#openModalAdd").addEventListener("click", function() { 
     TaskManager.emptyInputBoxes()
     document.getElementById("updateTaskBtn").style = "display: none;";
     document.getElementById("addTaskBtn").style = "";
@@ -240,11 +239,9 @@ document.querySelector("#openModalAdd").addEventListener("click", function() { /
 let tasksListStorage = localStorage.getItem("tasksList")
 let taskIdsStorage = localStorage.getItem("taskIds")
 
+//if local storage is found, updates the task managers corresponding attributes and displays local storage's content
 if(tasksListStorage){
     TaskManager.tasksList = JSON.parse(tasksListStorage)
     TaskManager.taskIds = JSON.parse(taskIdsStorage)
     TaskManager.displayCards()
 } 
-
-
-

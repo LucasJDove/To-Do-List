@@ -55,7 +55,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-danger" id="addTaskBtn" >Add Task</button>
+                    <button type="button" class="btn-success" id="addTaskBtn" >Add Task</button>
                     <button type="button" class="btn-danger" id="updateTaskBtn" style="display: none;">Update Task</button>
                 </div>
             </div>
@@ -63,28 +63,28 @@
     </div>
 
     <div class="header bg-dark">
-        <div class="col text-center">
-            <h1>To Do List</h1>
+        <div class="row text-center justify-items-center">
+            <h1 class="col-xl-2 col-lg-3 col-md-4 col-sm-5 col-6"> To Do List</h1>
+            <button class="col-lg-1 col-2 btn-success btn" id="openModalAdd" data-toggle="modal" data-target="#taskForm" title="Add a new task" alt="Add a new task">+</button>        
         </div>
         <div class="row text-center justify-content-center">
-            <button class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-12 btn-danger btn" id="openModalAdd" data-toggle="modal" data-target="#taskForm" title="Add a new task" alt="Add a new task">Add a new task</button>        
-            <div class="list-group col" id="contentListGroup">
+            <div class="list-group col-xl-11 col-lg-10 col-md-9 col-sm-9 col-12" id="contentListGroup">
                 
             </div>
         </div>
     </div>
     
     <div class="row" id="toDoOutput">
-        <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="TODO">
+        <div class="col-xl-2 col-lg-4 col-sm-5 col-8 cardSections" id="TODO">
             <h3>To Do</h3>
         </div>
-        <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="INPROGRESS">
+        <div class="col-xl-2 col-lg-4 col-sm-5 col-8 cardSections" id="INPROGRESS">
             <h3>In Progress</h3>
         </div>
-        <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="REVIEW">
+        <div class="col-xl-2 col-lg-4 col-sm-5 col-8 cardSections" id="REVIEW">
             <h3>Under Review</h3>
         </div>
-        <div class="col-xl-2 col-lg-3 col-sm-5 col-8 cardSections" id="DONE">
+        <div class="col-xl-2 col-lg-4 col-sm-5 col-8 cardSections" id="DONE">
             <h3>Done</h3>
         </div>
     </div>
