@@ -87,7 +87,7 @@ let TaskManager = {
     //fills out a single task and content list, parameter must be an object containing task content
     displayCard(task) { 
         let card = document.createElement("div"); //defines a new card
-        card.innerHTML = `<div class="list-group cards bg-${colourKey[task.status]}" id="${task.id}">
+        card.innerHTML = `<div class="list-group cards bg-light" id="${task.id}">
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-space-between ">
                                     <h5 class="mb-1 col-6">Task </h5>
