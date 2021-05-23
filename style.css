@@ -47,6 +47,15 @@ body {
     color: white;
 }
 
+h1, h3 {
+    filter: drop-shadow(2px 2px 2px #000000);
+}
+
+h3 {
+    border-bottom: 2px solid #FFF;
+    text-align: center;
+}
+
 #newTaskLabel {
     color: black;
     font-size: 30px;

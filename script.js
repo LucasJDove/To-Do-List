@@ -3,8 +3,8 @@ let taskSections = [nameInput, descriptionInput, assignedToInput, dueDateInput, 
 
 //create a new task object using the user's input
 class Task { 
-    constructor(taskSections) {
-        this.id = TaskManager.taskIds,
+    constructor() {
+        this.id = TaskManager.taskId,
         this.name = nameInput.value,
         this.description = descriptionInput.value,
         this.assignedTo = assignedToInput.value,
@@ -15,14 +15,14 @@ class Task {
 
 let TaskManager = {
     tasksList: [],
-    taskIds: 0,
+    taskId: 0,
 
 
     updatelocalstorage() {
         localStorage.setItem("tasksList",JSON.stringify(TaskManager.tasksList))
-        localStorage.setItem("taskIds",JSON.stringify(TaskManager.taskIds))
+        localStorage.setItem("taskId",JSON.stringify(TaskManager.taskId))
     },
-    
+
     emptyInputBoxes() { 
         for (i in taskSections) {
             taskSections[i].value = ""; 
@@ -167,7 +167,7 @@ let TaskManager = {
         let errors = TaskManager.validateTaskForm()
     
         if (errors.length == 0) {
-            TaskManager.taskIds++
+            TaskManager.taskId++
             $('#taskForm').modal('hide');
             TaskManager.emptyInputBoxes()
             TaskManager.tasksList.push(newTask) //adds current card to the list of cards in the form of an object
@@ -237,11 +237,11 @@ document.querySelector("#openModalAdd").addEventListener("click", function() {
 
 // retrieving local storage
 let tasksListStorage = localStorage.getItem("tasksList")
-let taskIdsStorage = localStorage.getItem("taskIds")
+let taskIdStorage = localStorage.getItem("taskId")
 
 //if local storage is found, updates the task managers corresponding attributes and displays local storage's content
 if(tasksListStorage){
     TaskManager.tasksList = JSON.parse(tasksListStorage)
-    TaskManager.taskIds = JSON.parse(taskIdsStorage)
+    TaskManager.taskId = JSON.parse(taskIdStorage)
     TaskManager.displayCards()
 } 
