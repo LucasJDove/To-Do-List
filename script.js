@@ -135,7 +135,6 @@ let TaskManager = {
         document.getElementById("contentListGroup").appendChild(contentListElem); 
         document.getElementById(task.id).querySelector(".deleteButton").addEventListener("click", () => TaskManager.deleteTask(task)); 
         document.getElementById(task.id).querySelector(".editButton").addEventListener("click", () => TaskManager.editTask(task)); 
-        document.getElementById(task.id).addEventListener("dragstart", () => TaskManager.updateTask(task, "status"));
     
     },
 
@@ -217,8 +216,6 @@ let TaskManager = {
         TaskManager.refreshUpdateButton()
         TaskManager.displayUpdateForm()
         
-        task = TaskManager.tasksList[TaskManager.findTargetIdIndex(task.id)]
-
         TaskManager.fillUpdateForm(task)
         
         document.querySelector("#updateTaskBtn").addEventListener("click", () => TaskManager.updateTask(task))
