@@ -75,12 +75,19 @@ let TaskManager = {
         statusInput.value = task["status"]
     },
 
-    // finds the index of the id given in the parameter
-    findTargetIdIndex(targetId) { 
-        for (i in TaskManager.tasksList) { //checks through the entire list
-            if(TaskManager.tasksList[i].id == targetId) { //if the id is equal to target id
-                return i
-            }
+    // finds the index of the id given in the parameter using a binary search, since the list will always have indexes in order
+    findTargetIdIndex(targetId, start, end) {                    
+        if (start > end) return false;
+
+        let mid = ((start + end)/2);
+
+        if (TaskManager.tasksList[mid] === targetId) return true;
+                
+        if(TaskManager.tasksList[mid] > targetId) {
+            return TaskManager.findTargetIdIndex(targetId, start, mid-1);
+        }
+        else {
+            return TaskManager.findTargetIdIndex(targetId, mid+1, end);
         }
     },
 
@@ -182,7 +189,7 @@ let TaskManager = {
 
     // deletes a task from the Tasks List and deletes it's corresponsing card
     deleteTask(task) {
-        TaskManager.tasksList.splice(TaskManager.findTargetIdIndex(task.id), 1)
+        TaskManager.tasksList.splice(TaskManager.findTargetIdIndex(task.id, 0, TaskManager.tasksList.length - 1), 1)
         TaskManager.updatelocalstorage()
         TaskManager.displayCards()
     },
