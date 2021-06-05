@@ -76,7 +76,7 @@ let TaskManager = {
     },
 
     // finds the index of the id given in the parameter using a binary search, since the list will always have indexes in order
-    findTargetIdIndex(targetId, start, end) {                    
+    findTargetIdIndex(targetId, start, end) {
         if (start > end) return false;
 
         let mid = ((start + end)/2);
@@ -105,19 +105,19 @@ let TaskManager = {
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
                                     <h5 class="mb-1">Name: </h5> 
-                                    <p class="name col"> ${task.name} </p>
+                                    <p class="name col">  </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
                                     <h5 class="mb-1">Description: </h5>
-                                    <p class="description col" style="word-wrap: break-word;"> ${task.description} </p>
+                                    <p class="description col" style="word-wrap: break-word;"> </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <div class="d-flex w-100 justify-content-between row">
                                     <h5 class="mb-1">Assigned to: </h5>
-                                    <p class="assignedTo col"> ${task.assignedTo} </p>
+                                    <p class="assignedTo col"> </p>
                                 </div>
                             </div>
                             <div class="list-group-item list-group-item-action">
@@ -128,11 +128,15 @@ let TaskManager = {
                             </div>
                         </div>`
 
-        
+        // this is more secure, because you aren't putting the user input directly into the page as HTML, which would mean if the user entered HTML tags it would mess with the formatting
+        card.querySelector(".name").innerText = task.name
+        card.querySelector(".description").innerText = task.description
+        card.querySelector(".assignedTo").innerText = task.assignedTo
+
         let contentListElem = document.createElement("div"); //defines a new element in the content list
         contentListElem.innerHTML = `<div class="list-group-item list-group-item-action" id="${task.id}contentList">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Task for: ${task.name}</h5>
+                                        <h5 class="mb-1">Task from: ${task.name}</h5>
                                         <small>Due: ${task.dueDate}</small>
                                     </div>
                                     <small>Status: ${task.status}</small>
